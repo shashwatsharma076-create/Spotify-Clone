@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Spotify - Music Player</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1db954">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class="fab fa-spotify"></i>
+                <span>VibeSpotify</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-item" data-page="search">
+                    <i class="fas fa-search"></i>
+                    <span>Search</span>
+                </a>
+                <a href="#" class="nav-item" data-page="library">
+                    <i class="fas fa-book"></i>
+                    <span>Your Library</span>
+                </a>
+            </nav>
+            
+            <div class="playlist-section">
+                <h3>Playlists</h3>
+                <div class="create-playlist">
+                    <i class="fas fa-plus-square"></i>
+                    <span>Create Playlist</span>
+                </div>
+                <div class="liked-songs">
+                    <i class="fas fa-heart"></i>
+                    <span>Liked Songs</span>
+                </div>
+            </div>
+            
+            <div class="playlist-list" id="playlistList">
+                <!-- Dynamically populated -->
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-bar">
+                <div class="nav-arrows">
+                    <button class="nav-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="nav-btn" disabled><i class="fas fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="header-buttons">
+                    <button class="install-btn">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>Install App</span>
+                    </button>
+                    <button class="profile-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Content Pages -->
+            <div class="content-area" id="contentArea">
+                <!-- Home Page -->
+                <div class="page active" id="homePage">
+                    <section class="hero-section">
+                        <div class="hero-content">
+                            <h1>Good ${new Date().getHours() < 12 ? 'Morning' : new Date().getHours() < 18 ? 'Afternoon' : 'Evening'}</h1>
+                            <div class="hero-mixes">
+                                <div class="hero-mix-card">
+                                    <img src="https://picsum.photos/seed/mix1/60" alt="">
+                                    <span>Liked Songs</span>
+                                </div>
+                                <div class="hero-mix-card">
+                                    <img src="https://picsum.photos/seed/mix2/60" alt="">
+                                    <span>Top Hits</span>
+                                </div>
+                                <div class="hero-mix-card">
+                                    <img src="https://picsum.photos/seed/mix3/60" alt="">
+                                    <span>Chill Vibes</span>
+                                </div>
+                                <div class="hero-mix-card">
+                                    <img src="https://picsum.photos/seed/mix4/60" alt="">
+                                    <span>Workout</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class=" playlists-section">
+                        <h2>Your Mixes</h2>
+                        <div class="card-grid" id="mixesGrid">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </section>
+                    
+                    <section class=" playlists-section">
+                        <h2>Featured Artists</h2>
+                        <div class="artist-grid" id="artistGrid">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </section>
+                    
+                    <section class=" playlists-section">
+                        <h2>Recently Played</h2>
+                        <div class="card-grid" id="recentGrid">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Search Page -->
+                <div class="page" id="searchPage">
+                    <div class="search-header">
+                        <h1>Search</h1>
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="What do you want to listen to?">
+                        </div>
+                    </div>
+                    
+                    <div class="browse-categories">
+                        <h2>Browse All</h2>
+                        <div class="category-grid" id="categoryGrid">
+                            <div class="category-card" style="background: linear-gradient(135deg, #1db954 0%, #191414 100%)">
+                                <span>Music</span>
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #e61e32 0%, #191414 100%)">
+                                <span>Podcasts</span>
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #f037a5 0%, #191414 100%)">
+                                <span>Live Events</span>
+                                <i class="fas fa-broadcast-tower"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #8c67ac 0%, #191414 100%)">
+                                <span>Made For You</span>
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #6081bf 0%, #191414 100%)">
+                                <span>Discover</span>
+                                <i class="fas fa-compass"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #dc148c 0%, #191414 100%)">
+                                <span>Hit Rewind</span>
+                                <i class="fas fa-redo"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #477d95 0%, #191414 100%)">
+                                <span>New Releases</span>
+                                <i class="fas fa-sparkles"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #a56752 0%, #191414 100%)">
+                                <span>Charts</span>
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #0d300d 0%, #191414 100%)">
+                                <span>Eco</span>
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #503029 0%, #191414 100%)">
+                                <span>Rock</span>
+                                <i class="fas fa-guitar"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #ba5d07 0%, #191414 100%)">
+                                <span>Country</span>
+                                <i class="fas fa-guitar"></i>
+                            </div>
+                            <div class="category-card" style="background: linear-gradient(135deg, #2e77d0 0%, #191414 100%)">
+                                <span>Electronic</span>
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Library Page -->
+                <div class="page" id="libraryPage">
+                    <div class="library-header">
+                        <h1>Your Library</h1>
+                        <div class="library-filters">
+                            <button class="filter-btn active">Playlists</button>
+                            <button class="filter-btn">Artists</button>
+                            <button class="filter-btn">Albums</button>
+                        </div>
+                    </div>
+                    
+                    <div class="sort-section">
+                        <button class="sort-btn">
+                            <i class="fas fa-sort-alpha-down"></i>
+                            Recently Added
+                        </button>
+                    </div>
+                    
+                    <div class="library-content" id="libraryContent">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Music Player Bar -->
+        <div class="player-bar" id="playerBar">
+            <div class="now-playing">
+                <div class="track-image" id="trackImage">
+                    <img src="https://picsum.photos/seed/default/56" alt="">
+                </div>
+                <div class="track-info">
+                    <span class="track-name" id="trackName">Song Title</span>
+                    <span class="artist-name" id="artistName">Artist</span>
+                </div>
+                <button class="like-btn"><i class="far fa-heart"></i></button>
+            </div>
+            
+            <div class="player-controls">
+                <div class="control-buttons">
+                    <button class="shuffle-btn"><i class="fas fa-random"></i></button>
+                    <button class="prev-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="play-btn" id="playBtn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="next-btn"><i class="fas fa-step-forward"></i></button>
+                    <button class="repeat-btn"><i class="fas fa-redo"></i></button>
+                </div>
+                
+                <div class="progress-bar">
+                    <span class="time-current" id="timeCurrent">0:00</span>
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                    <span class="time-total" id="timeTotal">0:00</span>
+                </div>
+            </div>
+            
+            <div class="volume-controls">
+                <button class="queue-btn"><i class="fas fa-list"></i></button>
+                <button class="devices-btn"><i class="fas fa-laptop-house"></i></button>
+                <div class="volume-bar">
+                    <i class="fas fa-volume-up"></i>
+                    <div class="volume-container">
+                        <div class="volume-level" id="volumeLevel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Offline Indicator -->
+    <div class="offline-indicator" id="offlineIndicator">
+        <i class="fas fa-wifi"></i>
+        <span>You're offline. Some features may be limited.</span>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
